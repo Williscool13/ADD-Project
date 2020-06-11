@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-    <androidx.viewpager.widget.ViewPager
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/container">
-    </androidx.viewpager.widget.ViewPager>
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/bottomNavView_Bar"
+        android:background="@drawable/white_grey_border_bottom"
+        app:menu="@menu/bottom_navigation_menu">
+
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
@@ -42,15 +44,5 @@
             android:background="@android:color/white"
             app:menu="@menu/drawer_view" />
     </androidx.drawerlayout.widget.DrawerLayout>
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:id="@+id/bottomNavView_Bar"
-        android:background="@drawable/white_grey_border_bottom"
-        app:menu="@menu/bottom_navigation_menu">
-
-    </com.google.android.material.bottomnavigation.BottomNavigationView>
-
 
 </RelativeLayout>

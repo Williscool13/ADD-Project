@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/data_collection"
+        android:title="Data Collection"
+        android:icon="@drawable/ic_baseline_cloud_24">
+    </item>
+    <item
+        android:id="@+id/individual_sensors"
+        android:title="Data Collection"
+        android:icon="@drawable/ic_baseline_dvr_24">
+    </item>
+    <item
+        android:id="@+id/location"
+        android:title="Location"
+        android:icon="@drawable/ic_baseline_map_24">
+    </item>
+    <item
+        android:id="@+id/settings"
+        android:title="Data Collection"
+        android:icon="@drawable/ic_baseline_settings_24">
+    </item>
+
+
+</menu>
