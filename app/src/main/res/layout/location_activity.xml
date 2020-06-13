@@ -1,46 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:animateLayoutChanges="true"
-    tools:context=".MainActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/map"
+    tools:context=".LocationActivity"
+    android:name="com.google.android.gms.maps.SupportMapFragment">
+
+
+
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:id="@+id/relLayoutTopBarMain"
+        android:id="@+id/relLayoutTopBarLocation"
         android:layout_alignParentTop="true">
+
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorPrimary"
             android:id="@+id/toolbar">
         </androidx.appcompat.widget.Toolbar>
+
+
+
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/relLayoutMiddleMain"
-        android:layout_below="@id/relLayoutTopBarMain"
-        android:layout_above="@id/relLayoutBottomBarMain">
+        android:layout_below="@id/relLayoutTopBarLocation"
+        android:layout_above="@id/relLayoutBottomBarLocation">
         <androidx.viewpager.widget.ViewPager
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/container">
+            android:id="@+id/container3">
         </androidx.viewpager.widget.ViewPager>
     </RelativeLayout>
-
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_alignParentBottom="true"
-        android:id="@+id/relLayoutBottomBarMain"
+        android:id="@+id/relLayoutBottomBarLocation"
         android:visibility="visible">
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavView_Bar"
@@ -51,13 +56,4 @@
             app:menu="@menu/bottom_navigation_menu">
         </com.google.android.material.bottomnavigation.BottomNavigationView>
     </RelativeLayout>
-
-
-
-
-
-
-
-
-
 </RelativeLayout>

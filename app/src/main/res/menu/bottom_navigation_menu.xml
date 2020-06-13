@@ -7,7 +7,7 @@
     </item>
     <item
         android:id="@+id/individual_sensors"
-        android:title="Data Collection"
+        android:title="Individual Sensors"
         android:icon="@drawable/ic_baseline_dvr_24">
     </item>
     <item
@@ -17,7 +17,7 @@
     </item>
     <item
         android:id="@+id/settings"
-        android:title="Data Collection"
+        android:title="Settings"
         android:icon="@drawable/ic_baseline_settings_24">
     </item>
 

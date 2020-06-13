@@ -5,14 +5,25 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
-public class Thermometer implements SensorEventListener {
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+public class Thermometer extends Fragment implements SensorEventListener {
     public static final String TAG = "Temperature";
     public SensorManager sensorManager;
     public float temperature;
     private Context context;
+    private Button button;
+    private Sensor temperatureSensor;
 
     public Thermometer(Context context){
         this.context = context;
@@ -20,8 +31,25 @@ public class Thermometer implements SensorEventListener {
     }
 
 
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.thermometer_layout, container, false);
+        activateThermometer();
+        button = (Button) view.findViewById(R.id.get_temperature);
+        button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, String.valueOf(temperature));
+                Toast.makeText(getActivity(), String.valueOf(temperature), Toast.LENGTH_LONG).show();
+            }
+        });
+
+        return view;
+    }
+
     public void activateThermometer(){
-        Sensor temperatureSensor = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
+        temperatureSensor = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
 
         if(temperatureSensor != null) {
             sensorManager.registerListener(this, temperatureSensor, SensorManager.SENSOR_DELAY_NORMAL);
@@ -36,7 +64,6 @@ public class Thermometer implements SensorEventListener {
     public void onSensorChanged(SensorEvent event) {
         if (event.values.length > 0) {
             temperature = event.values[0];
-            Log.d(TAG, String.valueOf(temperature));
         }
     }
 

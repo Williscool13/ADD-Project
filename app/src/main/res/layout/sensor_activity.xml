@@ -3,46 +3,74 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:id="@+id/bottomNavView_Bar"
-        android:background="@drawable/white_grey_border_bottom"
-        app:menu="@menu/bottom_navigation_menu">
 
-    </com.google.android.material.bottomnavigation.BottomNavigationView>
-
-    <androidx.drawerlayout.widget.DrawerLayout
-        android:id="@+id/drawer_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <!-- This LinearLayout represents the contents of the screen  -->
-        <LinearLayout
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:id="@+id/relLayoutTopBar"
+        android:layout_alignParentTop="true">
+        <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-            <!-- The ActionBar displayed at the top -->
-            <include
-                layout="@layout/toolbar"
+            android:background="@color/colorPrimary"
+            android:id="@+id/toolbar">
+        </androidx.appcompat.widget.Toolbar>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/relLayoutAppbar"
+        android:layout_below="@id/relLayoutTopBar">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <com.google.android.material.tabs.TabLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-            <!-- The main content view where fragments are loaded -->
-            <FrameLayout
-                android:id="@+id/flContent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </LinearLayout>
-        <!-- The navigation drawer that comes from the left -->
-        <!-- Note that `android:layout_gravity` needs to be set to 'start' -->
-        <com.google.android.material.navigation.NavigationView
-            android:id="@+id/nvView"
+                android:layout_height="match_parent"
+                android:id="@+id/tabs">
+            </com.google.android.material.tabs.TabLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/relLayoutMiddle"
+        android:layout_below="@id/relLayoutAppbar"
+        android:layout_above="@+id/relLayoutBottomBar">
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="12dp"
+            android:paddingLeft="12dp"
+            android:text="Sensor Activity">
+
+        </androidx.appcompat.widget.AppCompatTextView>
+        <androidx.viewpager.widget.ViewPager
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:background="@android:color/white"
-            app:menu="@menu/drawer_view" />
-    </androidx.drawerlayout.widget.DrawerLayout>
+            android:id="@+id/container2">
+        </androidx.viewpager.widget.ViewPager>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:id="@+id/relLayoutBottomBar"
+        android:layout_alignParentBottom="true">
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/bottomNavView_Bar"
+            android:background="@drawable/white_grey_border_bottom"
+            app:menu="@menu/bottom_navigation_menu">
+
+        </com.google.android.material.bottomnavigation.BottomNavigationView>
+    </RelativeLayout>
+
+
 
 </RelativeLayout>

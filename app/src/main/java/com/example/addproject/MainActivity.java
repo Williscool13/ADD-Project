@@ -1,23 +1,19 @@
 package com.example.addproject;
 
-import android.content.Context;
 import android.content.Intent;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
@@ -29,8 +25,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.bottomnavigation.BottomNavigationItemView;
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.AuthCredential;
@@ -38,8 +32,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-
-import java.lang.reflect.Field;
 
 public class MainActivity extends AppCompatActivity{
     private static final String TAG = "ADD Project";
@@ -58,19 +50,21 @@ public class MainActivity extends AppCompatActivity{
     private SensorManager sensorManager;
     private float pressure;
 
+    RelativeLayout relLayoutBottomBarMain;
+
+    Thermometer t;
+    Hygrometer h;
+    Barometer b;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         //HAMBURGER MENU
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        nvDrawer = (NavigationView) findViewById(R.id.nvView);
-        setupDrawerContent(nvDrawer);
 
         //GOOGLE DATABASE LOGIN
         mAuth = FirebaseAuth.getInstance();
@@ -84,21 +78,28 @@ public class MainActivity extends AppCompatActivity{
         mSectionsStatePageAdapter = new SectionsStatePagerAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.container);
         setupViewPager(mViewPager);
-        mViewPager.setCurrentItem(0);
-        setTitle("Home");
-
-        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        setTitle("Data Collection");
 
 
+        //Bottom Nav Menu
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavView_Bar);
-
+        Menu menu = bottomNavigationView.getMenu();
+        MenuItem menuItem = menu.getItem(0);
+        menuItem.setChecked(true);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.data_collection:
                         break;
+
                     case R.id.individual_sensors:
+                        Intent sensorIntent = new Intent(MainActivity.this, SensorsActivity.class);
+                        startActivity(sensorIntent);
+                        break;
+                    case R.id.location:
+                        Intent locationIntent = new Intent(MainActivity.this, LocationActivity.class);
+                        startActivity(locationIntent);
                         break;
                     case R.id.settings:
                         break;
@@ -109,42 +110,27 @@ public class MainActivity extends AppCompatActivity{
             }
         });
 
-        Intent menuIntent = new Intent(this, SensorsActivity.class);
-        startActivity(menuIntent);
+        relLayoutBottomBarMain = (RelativeLayout) findViewById(R.id.relLayoutBottomBarMain);
 
 
-        /*
-        Thermometer t = new Thermometer(this);
+        // Sensor Initialization
+        t = new Thermometer(this);
         t.activateThermometer();
-        float temp = t.getTemperature();
-
-        Barometer b = new Barometer(this);
+        b = new Barometer(this);
         b.activateBarometer();
-        float bar = b.getPressure();
-
-        Hygrometer h = new Hygrometer(this);
+        h = new Hygrometer(this);
         h.activateHygrometer();
-        float humidity = h.getHumidity();
 
-        Log.d(TAG, "PRESSURE");
-        Log.d(TAG, String.valueOf(bar));
-        Log.d(TAG, "TEMPERATURE");
-        Log.d(TAG, String.valueOf(temp));
-        Log.d(TAG, "HUMIDITY");
-        Log.d(TAG, String.valueOf(humidity));
-        */
+
+        if(checkLoginStatus() == null){
+            setViewPager(1);
+            relLayoutBottomBarMain.setVisibility(View.GONE);
+            getSupportActionBar().hide();
+        }
+
     }
 
-
-
-    private void setupViewPager(ViewPager viewPager){
-        SectionsStatePagerAdapter adapter = new SectionsStatePagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new Home(), "Fragment 1");
-        adapter.addFragment(new Location(), "Fragment 2");
-        adapter.addFragment(new Fragment3(), "Fragment 3");
-        viewPager.setAdapter(adapter);
-    }
-
+    // FIREBASE AUTHENTICATION
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -157,6 +143,9 @@ public class MainActivity extends AppCompatActivity{
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
                 firebaseAuthWithGoogle(account.getIdToken());
+                showTaskbar();
+                setViewPager(0);
+                relLayoutBottomBarMain.setVisibility(View.VISIBLE);
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
                 Log.w(TAG, "Google sign in failed", e);
@@ -186,7 +175,7 @@ public class MainActivity extends AppCompatActivity{
                 });
     }
 
-
+    // DRAWER (NOT IN USE)
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
@@ -220,25 +209,34 @@ public class MainActivity extends AppCompatActivity{
         mDrawer.closeDrawers();
     }
 
+    //OPTION MENU
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.settings_menu, menu);
+        inflater.inflate(R.menu.toolbar_menu, menu);
         return true;
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // The action bar home/up action should open or close the drawer.
         switch (item.getItemId()) {
-            case android.R.id.home:
-                mDrawer.openDrawer(GravityCompat.START);
-                return true;
-            case R.id.login:
-                signIn();
             case R.id.logout:
-                signOut();
+                signOut();getSupportActionBar().hide();
+                relLayoutBottomBarMain.setVisibility(View.GONE);
+                setViewPager(1)
+                ;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    // FRAGMENT MANAGEMENT
+    private void setupViewPager(ViewPager viewPager){
+        SectionsStatePagerAdapter adapter = new SectionsStatePagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new DataCollection(), "Home");
+        adapter.addFragment(new Splash(), "Login");
+        viewPager.setAdapter(adapter);
+    }
+    public void setViewPager(int fragmentNumber){
+        mViewPager.setCurrentItem(fragmentNumber);
     }
     public void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
@@ -256,5 +254,28 @@ public class MainActivity extends AppCompatActivity{
                         Log.d(TAG, "Logged Out");
                     }
                 });
+    }
+    public FirebaseUser checkLoginStatus(){
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        return user;
+    }
+    public void showTaskbar(){
+        getSupportActionBar().show();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        t.closeThermometer();
+        h.closeHygrometer();
+        b.closeBarometer();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        t.activateThermometer();
+        h.activateHygrometer();
+        b.activateBarometer();
     }
 }
