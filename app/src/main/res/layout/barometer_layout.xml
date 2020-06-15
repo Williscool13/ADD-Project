@@ -4,12 +4,183 @@
     android:layout_height="match_parent">
 
 
-    <Button
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Take Pressure"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:id="@+id/get_pressure">
-    </Button>
+        android:layout_centerInParent="true">
+        <!-- Reported Values -->
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/reportedValues">
+            <!-- Reported Values Title -->
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/reportedValuesTitle"
+                android:layout_centerHorizontal="true">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Reported Pressure"
+                    android:textSize="24dp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+            <!-- Reported Values Value-->
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/reportedValuesTitle"
+                android:layout_centerHorizontal="true">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/reportedPressureValue"
+                    android:textSize="24dp"
+                    android:text="-"/>
+
+            </RelativeLayout>
+        </RelativeLayout>
+        <!-- Current Pressure-->
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:layout_below="@id/reportedValues"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/currentValues">
+            <!-- Current Pressure Title-->
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/press_title">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Current Pressure"
+                    android:textSize="24dp"
+                    android:textStyle="bold"/>
+
+            </RelativeLayout>
+            <!-- Current Pressure Value-->
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/press_title"
+                android:layout_centerHorizontal="true">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/press_value"
+                    android:textSize="24dp"
+                    android:text="-"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+        <!-- Min Max Values -->
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/minMaxValues"
+            android:paddingTop="20dp"
+            android:layout_below="@id/currentValues"
+            android:layout_centerHorizontal="true">
+            <!-- Minimum Pressure -->
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/minPressure">
+                <!-- Minimum Pressure Title -->
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/minPressureTitle"
+                    android:layout_centerHorizontal="true">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Min Pressure"
+                        android:textSize="24dp"
+                        android:textStyle="bold"/>
+                </RelativeLayout>
+                <!-- Minimum Pressure Value-->
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/minPressureTitle">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/minPressureValue"
+                        android:text="-"
+                        android:textSize="24dp"/>
+
+
+                </RelativeLayout>
+            </RelativeLayout>
+            <Space
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/space"
+                android:layout_toRightOf="@id/minPressure">
+
+            </Space>
+            <!-- Maximum Pressure -->
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_toRightOf="@id/space">
+                <!-- Maximum Pressure Title-->
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/maxPressureTitle"
+                    android:layout_centerHorizontal="true">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Max Pressure"
+                        android:textSize="24dp"
+                        android:textStyle="bold"/>
+                </RelativeLayout>
+                <!-- Maximum Pressure Value-->
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/maxPressureTitle">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/maxPressureValue"
+                        android:text="-"
+                        android:textSize="24dp"/>
+
+
+                </RelativeLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+        <!-- Button -->
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/minMaxValues"
+            android:layout_centerHorizontal="true"
+            android:paddingTop="20dp">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Save Pressure Reading"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:id="@+id/save_pressure">
+            </Button>
+        </RelativeLayout>
+    </RelativeLayout>
+
 </RelativeLayout>

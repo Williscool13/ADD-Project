@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_first_fragment"
-            android:title="Home"
-            android:checked="true"/>
-        <item
-            android:id="@+id/nav_second_fragment"
-            android:title="Second" />
-        <item
-            android:id="@+id/nav_third_fragment"
-            android:title="Third" />
-    </group>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/history1"
+        android:title="-"/>
+    <item
+        android:id="@+id/history2"
+        android:title="-" />
+    <item
+        android:id="@+id/history3"
+        android:title="-" />
+    <item
+        android:id="@+id/history4"
+        android:title="-" />
+    <item
+        android:id="@+id/history5"
+        android:title="-" />
 </menu>

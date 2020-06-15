@@ -18,7 +18,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 public class SensorsActivity extends AppCompatActivity {
-    private static final String TAG = "SensorActivity";
+    private static final String TAG = "Sensor Activity";
     private Toolbar toolbar;
     private SectionsStatePagerAdapter mSectionsStatePageAdapter;
     private ViewPager mViewPager;
@@ -28,6 +28,7 @@ public class SensorsActivity extends AppCompatActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sensor_activity);
+        setTitle(TAG);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -79,9 +80,9 @@ public class SensorsActivity extends AppCompatActivity {
     }
     private void setupViewPager(ViewPager viewPager){
         SectionsStatePagerAdapter adapter = new SectionsStatePagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new Thermometer(this), "Thermometer");
-        adapter.addFragment(new Hygrometer(this), "Hygrometer");
-        adapter.addFragment(new Barometer(this), "Barometer");
+        adapter.addFragment(new Thermometer(), "Thermometer");
+        adapter.addFragment(new Hygrometer(), "Hygrometer");
+        adapter.addFragment(new Barometer(), "Barometer");
 
         viewPager.setAdapter(adapter);
     }

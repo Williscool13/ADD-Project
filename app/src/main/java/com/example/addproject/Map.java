@@ -31,6 +31,7 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
@@ -46,7 +47,6 @@ public class Map extends Fragment implements OnMapReadyCallback {
     private FusedLocationProviderClient mFusedLocationProviderClient;
 
 
-    Context context;
 
     private Boolean mLocationPermissionsGranted = false;
 
@@ -92,7 +92,7 @@ public class Map extends Fragment implements OnMapReadyCallback {
         }
     }
 
-    private void moveCamera(LatLng latLng, float zoom) {
+    public void moveCamera(LatLng latLng, float zoom) {
         Log.d(TAG, "moveCamera: moving the camera to: lat: " + latLng.latitude + ", long: " + latLng.longitude);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
     }
@@ -162,5 +162,13 @@ public class Map extends Fragment implements OnMapReadyCallback {
             }
             mMap.setMyLocationEnabled(true);
         }
+    }
+
+    public void addMarker(LatLng latLng){
+        mMap.addMarker(new MarkerOptions().position(latLng));
+    }
+
+    public void clearMap(){
+        mMap.clear();
     }
 }

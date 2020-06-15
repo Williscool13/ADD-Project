@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">ADDPROJECT</string>
     <string name="logout">logout</string>
+    <string name="navigation_drawer_open">Drawer Open</string>
+    <string name="navigation_drawer_close">Drawer Closed</string>
+
 </resources>

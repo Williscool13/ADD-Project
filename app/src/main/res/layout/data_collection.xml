@@ -3,11 +3,193 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="12dp">
+    android:background="@color/cardview_dark_background">
     <!--Size of toolbar is 48dp, 12dp for regular spacing-->
 
-    <TextView
+
+    <RelativeLayout
+        android:padding="20dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Data Collection Fragment" />
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:background="@color/cardview_light_background">
+
+        <RelativeLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/valueDisplay"
+            android:layout_centerHorizontal="true"
+            android:paddingBottom="20dp">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_centerHorizontal="true">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Weather Reading"
+                    android:textSize="24dp"
+                    android:textStyle="bold"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/weather_title"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/weather_info"
+                    android:text="Loading Weather Reading"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/weather_title"
+                    android:textSize="24dp"/>
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:id="@+id/valueDisplay">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/sensorLabels">
+                <RelativeLayout
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/temperatureRelLay">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/temperature_title"
+                        android:textSize="24dp"
+                        android:textStyle="bold"
+                        android:layout_centerHorizontal="true"
+                        android:text="Temperature"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/temperature_title"
+                        android:id="@+id/temperature_value"
+                        android:layout_centerHorizontal="true"
+                        android:text="-"
+                        android:textSize="24dp"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/humidityRelLay"
+                    android:layout_below="@id/temperatureRelLay"
+                    android:paddingTop="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:textSize="24dp"
+                        android:textStyle="bold"
+                        android:id="@+id/humidity_title"
+
+                        android:text="Humidity"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/humidity_title"
+                        android:id="@+id/humidity_value"
+                        android:layout_centerHorizontal="true"
+                        android:text="-"
+                        android:textSize="24dp"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/humidityRelLay"
+                    android:paddingTop="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:textSize="24dp"
+                        android:textStyle="bold"
+                        android:id="@+id/pressure_title"
+                        android:text="Pressure"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/pressure_title"
+                        android:layout_centerHorizontal="true"
+                        android:id="@+id/pressure_value"
+                        android:textSize="24dp"
+                        android:text="-"/>
+                </RelativeLayout>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/positionLabels"
+                android:layout_toRightOf="@id/sensorLabels"
+                android:layout_centerVertical="true">
+                <RelativeLayout
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/latitudeRelLay">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/latitude_title"
+                        android:textSize="24dp"
+                        android:textStyle="bold"
+                        android:layout_centerHorizontal="true"
+                        android:text="Latitude"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/latitude_title"
+                        android:layout_centerHorizontal="true"
+                        android:id="@+id/latitude_value"
+                        android:textSize="24dp"
+                        android:text="-"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/longitudeRelLay"
+                    android:layout_below="@id/latitudeRelLay">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/longitude_title"
+                        android:textSize="24dp"
+                        android:textStyle="bold"
+                        android:layout_centerHorizontal="true"
+                        android:text="Latitude"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/longitude_title"
+                        android:layout_centerHorizontal="true"
+                        android:id="@+id/longitude_value"
+                        android:textSize="24dp"
+                        android:text="-"/>
+            </RelativeLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:paddingTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/valueDisplay"
+            android:layout_centerHorizontal="true">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button"
+            android:id="@+id/data_collect_button"
+
+            android:layout_centerHorizontal="true"
+            android:paddingTop="20dp"/>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
 </RelativeLayout>
