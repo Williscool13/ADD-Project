@@ -3,6 +3,7 @@ package com.example.addproject;
 import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -142,9 +143,27 @@ public class DataCollection extends Fragment implements SensorEventListener{
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyy hhmmss");
         String date = dateFormat.format(calendar.getTime());
-        mDatabase.child("Data").child("Main").child(date).child("Temperature").setValue(temperature);
-        mDatabase.child("Data").child("Main").child(date).child("Pressure").setValue(pressure);
-        mDatabase.child("Data").child("Main").child(date).child("Humidity").setValue(humidity);
+        SharedPreferences pref = getActivity().getSharedPreferences("MyPref", 0); // 0 - for private mode
+        boolean optionsCelsius = pref.getBoolean("Celsius", true);
+        boolean optionsMBar = pref.getBoolean("mBar", true);
+        boolean optionsRelative = pref.getBoolean("Relative", true);
+
+        if(optionsCelsius){
+            mDatabase.child("Data").child("Main").child(date).child("Temperature").setValue(temperature + "°C");
+        } else {
+            mDatabase.child("Data").child("Main").child(date).child("Temperature").setValue(temperature + "°F");
+        }
+        if(optionsMBar){
+            mDatabase.child("Data").child("Main").child(date).child("Pressure").setValue(pressure + "mBar");
+        } else {
+            mDatabase.child("Data").child("Main").child(date).child("Pressure").setValue(pressure + "Pa");
+        }
+        if(optionsRelative){
+            mDatabase.child("Data").child("Main").child(date).child("Humidity").setValue(humidity + "% (Relative)");
+        } else {
+            mDatabase.child("Data").child("Main").child(date).child("Humidity").setValue(humidity + "% (Absolute)");
+        }
+
         mDatabase.child("Data").child("Main").child(date).child("Latitude").setValue(latitude);
         mDatabase.child("Data").child("Main").child(date).child("Longitude").setValue(longitude);
         mDatabase.child("Data").child("Main").child(date).child("Weather").setValue(toTitleCase(weatherInfo));
@@ -157,9 +176,27 @@ public class DataCollection extends Fragment implements SensorEventListener{
     }
     private void updateValues(){
         setLatLong();
-        temp.setText(String.valueOf(temperature));
-        pres.setText(String.valueOf(pressure));
-        humi.setText(String.valueOf(humidity));
+        SharedPreferences pref = getActivity().getSharedPreferences("MyPref", 0); // 0 - for private mode
+        boolean optionsCelsius = pref.getBoolean("Celsius", true);
+        boolean optionsMBar = pref.getBoolean("mBar", true);
+        boolean optionsRelative = pref.getBoolean("Relative", true);
+
+        if(optionsCelsius){
+            temp.setText(String.valueOf(temperature) + "°C");
+        } else {
+            temp.setText(String.valueOf(temperature) + "°F");
+        }
+        if(optionsMBar){
+            pres.setText(String.valueOf(pressure) + "mBar");
+        } else {
+            pres.setText(String.valueOf(pressure) + "Pa");
+        }
+        if(optionsRelative){
+            humi.setText(String.valueOf(humidity) + "% (Relative)");
+        } else {
+            humi.setText(String.valueOf(humidity) + "% (Absolute)");
+        }
+
         lat.setText(String.valueOf(latitude));
         lon.setText(String.valueOf(longitude));
         weather.setText(toTitleCase(weatherInfo));

@@ -164,8 +164,8 @@ public class Map extends Fragment implements OnMapReadyCallback {
         }
     }
 
-    public void addMarker(LatLng latLng){
-        mMap.addMarker(new MarkerOptions().position(latLng));
+    public void addMarker(LatLng latLng, String title){
+        mMap.addMarker(new MarkerOptions().position(latLng).title(title));
     }
 
     public void clearMap(){

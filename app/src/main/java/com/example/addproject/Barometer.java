@@ -1,6 +1,7 @@
 package com.example.addproject;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -49,12 +50,18 @@ public class Barometer extends Fragment implements SensorEventListener {
     TextView currentValue;
     TextView reportedValue;
 
+    private boolean optionsMBar;
+    private String suffix;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.barometer_layout, container, false);
         activateBarometer();
 
+        SharedPreferences pref = getActivity().getSharedPreferences("MyPref", 0); // 0 - for private mode
+        optionsMBar = pref.getBoolean("mBar", true);
+        changePrefixSuffix();
 
         minValue = view.findViewById(R.id.minPressureValue);
         maxValue = view.findViewById(R.id.maxPressureValue);
@@ -76,6 +83,15 @@ public class Barometer extends Fragment implements SensorEventListener {
         new Barometer.weatherTask().execute();
 
         return view;
+    }
+
+    private void changePrefixSuffix() {
+        if(optionsMBar){
+            suffix = " mBar";
+        } else {
+            suffix = " Pa";
+        }
+
     }
 
     public void savePressure(){
@@ -101,23 +117,38 @@ public class Barometer extends Fragment implements SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent event) {
         if (event.values.length > 0) {
-            reportedValue.setText(pressure_reported);
+
             pressure = event.values[0];
+            float temp_rep_value = 0;
+            if(!optionsMBar){
+                if(pressure_reported != null){
+                    temp_rep_value = (Float.valueOf(pressure_reported)) * 100;
+                }
+                pressure = pressure * 100;
+            } else {
+                if(pressure_reported != null){
+                    temp_rep_value = Float.valueOf(pressure_reported);
+                }
+
+            }
+
+
+            reportedValue.setText(String.valueOf(temp_rep_value) + suffix);
             if(pressure_min == 0 && pressure_max == 0){
                 pressure_min = pressure;
                 pressure_max = pressure;
-                minValue.setText(String.valueOf(pressure));
-                maxValue.setText(String.valueOf(pressure));
+                minValue.setText(String.valueOf(pressure) + suffix);
+                maxValue.setText(String.valueOf(pressure) + suffix);
             }
-            currentValue.setText(String.valueOf(pressure));
+            currentValue.setText(String.valueOf(pressure) + suffix);
         }
         if(pressure >= pressure_max){
             pressure_max = pressure;
-            maxValue.setText(String.valueOf(pressure));
+            maxValue.setText(String.valueOf(pressure) + suffix);
         }
         if (pressure <= pressure_min){
             pressure_min = pressure;
-            minValue.setText(String.valueOf(pressure));
+            minValue.setText(String.valueOf(pressure) + suffix);
         }
 
     }

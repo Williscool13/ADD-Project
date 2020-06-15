@@ -1,6 +1,7 @@
 package com.example.addproject;
 
 import android.content.Intent;
+import android.hardware.Sensor;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.view.Menu;
@@ -54,6 +55,8 @@ public class SensorsActivity extends AppCompatActivity {
                         startActivity(locationIntent);
                         break;
                     case R.id.settings:
+                        Intent settingsIntent = new Intent(SensorsActivity.this, Settings.class);
+                        startActivity(settingsIntent);
                         break;
                 }
                 return false;

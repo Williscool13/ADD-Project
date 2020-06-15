@@ -143,35 +143,35 @@ public class LocationActivity extends AppCompatActivity{
                         LatLng latLng1 = new LatLng(Double.valueOf(History[0].latitude), Double.valueOf(History[0].longitude));
                         theMap.moveCamera(latLng1, 15f);
                         theMap.clearMap();
-                        theMap.addMarker(latLng1);
+                        theMap.addMarker(latLng1, "5 Entries Before");
                         break;
                     case R.id.history2:
                         Toast.makeText(LocationActivity.this, "Location 2 Displaying",Toast.LENGTH_SHORT).show();
                         LatLng latLng2 = new LatLng(Double.valueOf(History[1].latitude), Double.valueOf(History[1].longitude));
                         theMap.moveCamera(latLng2, 15f);
                         theMap.clearMap();
-                        theMap.addMarker(latLng2);
+                        theMap.addMarker(latLng2, "4 Entries Before");
                         break;
                     case R.id.history3:
                         Toast.makeText(LocationActivity.this, "Location 3 Displaying",Toast.LENGTH_SHORT).show();
                         LatLng latLng3 = new LatLng(Double.valueOf(History[2].latitude), Double.valueOf(History[2].longitude));
                         theMap.moveCamera(latLng3, 15f);
                         theMap.clearMap();
-                        theMap.addMarker(latLng3);
+                        theMap.addMarker(latLng3, "3 Entries Before");
                         break;
                     case R.id.history4:
                         Toast.makeText(LocationActivity.this, "Location 4 Displaying",Toast.LENGTH_SHORT).show();
                         LatLng latLng4 = new LatLng(Double.valueOf(History[3].latitude), Double.valueOf(History[3].longitude));
                         theMap.moveCamera(latLng4, 15f);
                         theMap.clearMap();
-                        theMap.addMarker(latLng4);
+                        theMap.addMarker(latLng4, "2 Entries Before");
                         break;
                     case R.id.history5:
                         Toast.makeText(LocationActivity.this, "Location 5 Displaying",Toast.LENGTH_SHORT).show();
                         LatLng latLng5 = new LatLng(Double.valueOf(History[4].latitude), Double.valueOf(History[4].longitude));
                         theMap.moveCamera(latLng5, 15f);
                         theMap.clearMap();
-                        theMap.addMarker(latLng5);
+                        theMap.addMarker(latLng5, "Previous Entry");
                         break;
                     default:
                         return true;
@@ -215,6 +215,8 @@ public class LocationActivity extends AppCompatActivity{
 
                         break;
                     case R.id.settings:
+                        Intent settingsIntent = new Intent(LocationActivity.this, Settings.class);
+                        startActivity(settingsIntent);
                         break;
                 }
                 return false;

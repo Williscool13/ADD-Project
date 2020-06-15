@@ -13,7 +13,6 @@
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:background="@color/cardview_light_background">
-
         <RelativeLayout
             android:layout_width="300dp"
             android:layout_height="wrap_content"
@@ -44,7 +43,6 @@
             </RelativeLayout>
 
         </RelativeLayout>
-
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -73,7 +71,7 @@
                         android:id="@+id/temperature_value"
                         android:layout_centerHorizontal="true"
                         android:text="-"
-                        android:textSize="24dp"/>
+                        android:textSize="18dp"/>
                 </RelativeLayout>
                 <RelativeLayout
                     android:layout_width="150dp"
@@ -97,7 +95,7 @@
                         android:id="@+id/humidity_value"
                         android:layout_centerHorizontal="true"
                         android:text="-"
-                        android:textSize="24dp"/>
+                        android:textSize="18dp"/>
                 </RelativeLayout>
                 <RelativeLayout
                     android:layout_width="150dp"
@@ -118,7 +116,7 @@
                         android:layout_below="@id/pressure_title"
                         android:layout_centerHorizontal="true"
                         android:id="@+id/pressure_value"
-                        android:textSize="24dp"
+                        android:textSize="18dp"
                         android:text="-"/>
                 </RelativeLayout>
             </RelativeLayout>
@@ -146,7 +144,7 @@
                         android:layout_below="@id/latitude_title"
                         android:layout_centerHorizontal="true"
                         android:id="@+id/latitude_value"
-                        android:textSize="24dp"
+                        android:textSize="18dp"
                         android:text="-"/>
                 </RelativeLayout>
                 <RelativeLayout
@@ -168,7 +166,7 @@
                         android:layout_below="@id/longitude_title"
                         android:layout_centerHorizontal="true"
                         android:id="@+id/longitude_value"
-                        android:textSize="24dp"
+                        android:textSize="18dp"
                         android:text="-"/>
             </RelativeLayout>
             </RelativeLayout>

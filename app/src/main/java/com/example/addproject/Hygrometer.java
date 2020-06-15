@@ -1,6 +1,7 @@
 package com.example.addproject;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -49,12 +50,23 @@ public class Hygrometer extends Fragment implements SensorEventListener {
     TextView currentValue;
     TextView reportedValue;
 
+    private boolean optionsRelative;
+    private String suffix;
+
+    View view;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.hygrometer_layout, container, false);
+        view = inflater.inflate(R.layout.hygrometer_layout, container, false);
         activateHygrometer();
+        SharedPreferences pref = getActivity().getSharedPreferences("MyPref", 0); // 0 - for private mode
+
+        optionsRelative = pref.getBoolean("Relative", true);
+        changePrefixSuffix();
+
+
+
 
 
         minValue = view.findViewById(R.id.minHumidityValue);
@@ -79,6 +91,21 @@ public class Hygrometer extends Fragment implements SensorEventListener {
         return view;
     }
 
+    private void changePrefixSuffix() {
+        String prefix;
+        if(optionsRelative){
+            prefix = "Relative";
+            suffix = "%";
+        } else {
+            prefix = "Absolute";
+            suffix = "g/m^3";
+        }
+        TextView temp = (TextView) view.findViewById(R.id.reportedHumidityTitle);
+        temp.setText("Reported " + prefix + " Humidity");
+        TextView temp2 = (TextView) view.findViewById(R.id.currentHumidityTitle);
+        temp2.setText("Current " + prefix + " Humidity");
+    }
+
     public void saveHumidmity(){
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyy hhmmss");
@@ -91,27 +118,35 @@ public class Hygrometer extends Fragment implements SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent event) {
         if (event.values.length > 0) {
+            float humidity_reported_temp = 0;
             humidity = event.values[0];
-        }
+            if(!optionsRelative){
+                if(humidity_reported != null){
+                    humidity_reported_temp = (float) ((float) 216.7 * (((Float.valueOf(humidity_reported) / 100) * 6.112 * Math.exp((17.6 * 30) / (243.12 + 30))) / (273.15 + 30)));
+                }
 
-        if (event.values.length > 0) {
-            reportedValue.setText(humidity_reported);
-            humidity = event.values[0];
+                humidity = (float) ((float) 216.7 * (((Float.valueOf(humidity) / 100) * 6.112 * Math.exp((17.6 * 30) / (243.12 + 30))) / (273.15 + 30)));
+            } else {
+                if(humidity_reported != null){
+                    humidity_reported_temp = Float.valueOf(humidity_reported);
+                }
+            }
+            reportedValue.setText(String.valueOf(humidity_reported_temp) + suffix);
             if(humidity_min == 0 && humidity_max == 0){
                 humidity_min = humidity;
                 humidity_max = humidity;
-                minValue.setText(String.valueOf(humidity));
-                maxValue.setText(String.valueOf(humidity));
+                minValue.setText(String.valueOf(humidity) + suffix);
+                maxValue.setText(String.valueOf(humidity) + suffix);
             }
-            currentValue.setText(String.valueOf(humidity));
+            currentValue.setText(String.valueOf(humidity) + suffix);
         }
         if(humidity >= humidity_max){
             humidity_max = humidity;
-            maxValue.setText(String.valueOf(humidity));
+            maxValue.setText(String.valueOf(humidity) + suffix);
         }
         if (humidity <= humidity_min){
             humidity_min = humidity;
-            minValue.setText(String.valueOf(humidity));
+            minValue.setText(String.valueOf(humidity) + suffix);
         }
 
     }

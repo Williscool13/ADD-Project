@@ -22,6 +22,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Reported Humidity"
+                    android:id="@+id/reportedHumidityTitle"
                     android:textSize="24dp"
                     android:textStyle="bold" />
             </RelativeLayout>
@@ -58,6 +59,7 @@
                     android:layout_height="wrap_content"
                     android:text="Current Humidity"
                     android:textSize="24dp"
+                    android:id="@+id/currentHumidityTitle"
                     android:textStyle="bold"/>
 
             </RelativeLayout>

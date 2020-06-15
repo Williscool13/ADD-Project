@@ -1,6 +1,7 @@
 package com.example.addproject;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -38,7 +39,7 @@ public class Thermometer extends Fragment implements SensorEventListener {
     public float temperature;
     public float temperature_min;
     public float temperature_max;
-    public String temperature_reported;
+    public String temperature_reported = "1";
     private Context context;
     private Button button;
     private Sensor temperatureSensor;
@@ -50,12 +51,21 @@ public class Thermometer extends Fragment implements SensorEventListener {
     TextView currentValue;
     TextView reportedValue;
 
+    private boolean optionsCelsius;
+    private String suffix;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.thermometer_layout, container, false);
+        new Thermometer.weatherTask().execute();
         activateThermometer();
 
+
+        SharedPreferences pref = getActivity().getSharedPreferences("MyPref", 0); // 0 - for private mode
+
+        optionsCelsius = pref.getBoolean("Celsius", true);
+        changePrefixSuffix();
 
         minValue = view.findViewById(R.id.minTemperatureValue);
         maxValue = view.findViewById(R.id.maxTemperatureValue);
@@ -74,8 +84,17 @@ public class Thermometer extends Fragment implements SensorEventListener {
             }
         });
 
-        new Thermometer.weatherTask().execute();
+
         return view;
+    }
+
+    private void changePrefixSuffix() {
+        if(optionsCelsius){
+            suffix = "°C";
+        } else {
+            suffix = "°F";
+        }
+
     }
 
 
@@ -103,23 +122,40 @@ public class Thermometer extends Fragment implements SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent event) {
         if (event.values.length > 0) {
-            reportedValue.setText(temperature_reported);
+
             temperature = event.values[0];
+            float temp_rep_value = 0;
+
+            if(!optionsCelsius){
+                if(temperature_reported != null){
+                    temp_rep_value = (Float.valueOf(temperature_reported) * 9 / 5) + 32;
+                }
+
+                temperature = (temperature * 9 / 5) + 32;
+            } else {
+                if(temperature_reported != null){
+                    temp_rep_value = Float.valueOf(temperature_reported);
+                }
+
+            }
+
+            reportedValue.setText(String.valueOf(temp_rep_value) + suffix);
+
             if(temperature_min == 0 && temperature_max == 0){
                 temperature_min = temperature;
                 temperature_max = temperature;
-                minValue.setText(String.valueOf(temperature));
-                maxValue.setText(String.valueOf(temperature));
+                minValue.setText(String.valueOf(temperature) + suffix);
+                maxValue.setText(String.valueOf(temperature) + suffix);
             }
-            currentValue.setText(String.valueOf(temperature));
+            currentValue.setText(String.valueOf(temperature) + suffix);
         }
         if(temperature >= temperature_max){
             temperature_max = temperature;
-            maxValue.setText(String.valueOf(temperature));
+            maxValue.setText(String.valueOf(temperature) + suffix);
         }
         if (temperature <= temperature_min){
             temperature_min = temperature;
-            minValue.setText(String.valueOf(temperature));
+            minValue.setText(String.valueOf(temperature) + suffix);
         }
     }
 

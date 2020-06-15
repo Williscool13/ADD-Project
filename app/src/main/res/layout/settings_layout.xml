@@ -1,6 +1,199 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/relLayoutTopBarSettings"
+        android:layout_alignParentTop="true">
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
+            android:id="@+id/toolbar">
+        </androidx.appcompat.widget.Toolbar>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/relLayoutBottomBarSettings"
+        android:layout_below="@id/relLayoutTopBarSettings"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+            <!-- Temperature Format -->
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/temperatureFormat">
+
+                <TextView
+                    android:id="@+id/temperatureFormatText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Temperature Format"
+                    android:layout_centerHorizontal="true"
+                    android:textStyle="bold"
+                    android:textSize="24dp" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/temperatureFormatText">
+
+
+                    <TextView
+                        android:id="@+id/fahrenheitLabel"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="Fahrenheit"
+                        android:textSize="24dp" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/temperatureSwitch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_toRightOf="@id/fahrenheitLabel"
+                        android:textSize="36dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/CelsiusLabel"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_toRightOf="@id/temperatureSwitch"
+                        android:text="Celsius"
+                        android:textSize="24dp"
+                        android:gravity="right"/>
+                </RelativeLayout>
+            </RelativeLayout>
+            <!-- Humidity Format -->
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/humidityFormat"
+                android:paddingTop="20dp"
+                android:layout_below="@id/temperatureFormat">
+
+                <TextView
+                    android:id="@+id/humidityFormatText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Humidity Format"
+                    android:layout_centerHorizontal="true"
+                    android:textStyle="bold"
+                    android:textSize="24dp" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/humidityFormatText">
+
+
+                    <TextView
+                        android:id="@+id/absoluteLabel"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="Absolute"
+                        android:textSize="24dp" />
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/humiditySwitch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_toRightOf="@id/absoluteLabel"
+                        android:textSize="36dp"
+                        />
+                    <TextView
+                        android:id="@+id/relativeLabel"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_toRightOf="@id/humiditySwitch"
+                        android:text="Relative"
+                        android:textSize="24dp"
+                        android:gravity="right"/>
+                </RelativeLayout>
+            </RelativeLayout>
+            <!-- Pressure Format -->
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/pressureFormat"
+                android:paddingTop="20dp"
+                android:layout_below="@id/humidityFormat">
+
+                <TextView
+                    android:id="@+id/pressureFormatText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pressure Format"
+                    android:layout_centerHorizontal="true"
+                    android:textStyle="bold"
+                    android:textSize="24dp" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/pressureFormatText">
+
+
+                    <TextView
+                        android:id="@+id/dummyLabel"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="Pascal"
+                        android:textSize="24dp" />
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/pressureSwitch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_toRightOf="@id/dummyLabel"
+                        android:textSize="36dp" />
+                    <TextView
+                        android:id="@+id/mBarLabel"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_toRightOf="@id/pressureSwitch"
+                        android:text="mbar"
+                        android:gravity="right"
+                        android:textSize="24dp" />
+                </RelativeLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/relLayoutBottomBarSettings"
+        android:visibility="visible">
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavView_Bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@android:color/white"
+            app:menu="@menu/bottom_navigation_menu">
+        </com.google.android.material.bottomnavigation.BottomNavigationView>
+    </RelativeLayout>
+
+</RelativeLayout>
