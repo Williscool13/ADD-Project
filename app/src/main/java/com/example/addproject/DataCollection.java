@@ -5,6 +5,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -97,6 +99,9 @@ public class DataCollection extends Fragment implements SensorEventListener{
     TextView lon;
     TextView weather;
 
+    String CITY = "Singapore, Singapore";
+    String API = "09d8db7607046ea8681107f1455102e5";
+
 
     @Nullable
     @Override
@@ -168,7 +173,6 @@ public class DataCollection extends Fragment implements SensorEventListener{
         mDatabase.child("Data").child("Main").child(date).child("Longitude").setValue(longitude);
         mDatabase.child("Data").child("Main").child(date).child("Weather").setValue(toTitleCase(weatherInfo));
     }
-
     //Value Maintenance Business
     private void setLatLong() {
         latitude = (float) currentLocation.getLatitude();
@@ -201,7 +205,6 @@ public class DataCollection extends Fragment implements SensorEventListener{
         lon.setText(String.valueOf(longitude));
         weather.setText(toTitleCase(weatherInfo));
     }
-
     //Sensor Business
     @Override
     public void onPause() {
@@ -214,8 +217,12 @@ public class DataCollection extends Fragment implements SensorEventListener{
         activateSensors();
         handler.postDelayed( runnable = new Runnable() {
             public void run() {
-                getDeviceLocation();
-                updateValues();
+                if(getActivity() != null){
+                    getDeviceLocation();
+                }
+                if(currentLocation != null && getActivity() != null){
+                    updateValues();
+                }
                 Log.d(TAG,"Sensors and Location Are Working!");
                 handler.postDelayed(runnable, delay);
             }
@@ -262,9 +269,7 @@ public class DataCollection extends Fragment implements SensorEventListener{
     }
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
     }
-
     //Location Business
     private void getDeviceLocation() {
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
@@ -277,7 +282,7 @@ public class DataCollection extends Fragment implements SensorEventListener{
                     @Override
                     public void onComplete(@NonNull Task task) {
                         if (task.isSuccessful()) {
-
+                            Log.d(TAG, "Location Found!");
                             currentLocation = (Location) task.getResult();
 
                         } else {
@@ -348,8 +353,35 @@ public class DataCollection extends Fragment implements SensorEventListener{
     }
 
 
-    String CITY = "Singapore, Singapore";
-    String API = "09d8db7607046ea8681107f1455102e5";
+    public static String toTitleCase(String str) {
+
+        if (str == null) {
+            return null;
+        }
+
+        boolean space = true;
+        StringBuilder builder = new StringBuilder(str);
+        final int len = builder.length();
+
+        for (int i = 0; i < len; ++i) {
+            char c = builder.charAt(i);
+            if (space) {
+                if (!Character.isWhitespace(c)) {
+                    // Convert to title case and switch out of whitespace mode.
+                    builder.setCharAt(i, Character.toTitleCase(c));
+                    space = false;
+                }
+            } else if (Character.isWhitespace(c)) {
+                space = true;
+            } else {
+                builder.setCharAt(i, Character.toLowerCase(c));
+            }
+        }
+
+        return builder.toString();
+    }
+
+
     class weatherTask extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
@@ -393,33 +425,5 @@ public class DataCollection extends Fragment implements SensorEventListener{
             }
 
         }
-    }
-
-    public static String toTitleCase(String str) {
-
-        if (str == null) {
-            return null;
-        }
-
-        boolean space = true;
-        StringBuilder builder = new StringBuilder(str);
-        final int len = builder.length();
-
-        for (int i = 0; i < len; ++i) {
-            char c = builder.charAt(i);
-            if (space) {
-                if (!Character.isWhitespace(c)) {
-                    // Convert to title case and switch out of whitespace mode.
-                    builder.setCharAt(i, Character.toTitleCase(c));
-                    space = false;
-                }
-            } else if (Character.isWhitespace(c)) {
-                space = true;
-            } else {
-                builder.setCharAt(i, Character.toLowerCase(c));
-            }
-        }
-
-        return builder.toString();
     }
 }
