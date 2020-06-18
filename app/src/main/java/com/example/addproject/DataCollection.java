@@ -395,8 +395,6 @@ public class DataCollection extends Fragment implements SensorEventListener{
 
         @Override
         protected void onPostExecute(String result) {
-
-
             try {
                 JSONObject jsonObj = new JSONObject(result);
                 JSONObject main = jsonObj.getJSONObject("main");
@@ -406,15 +404,6 @@ public class DataCollection extends Fragment implements SensorEventListener{
 
                 Long updatedAt = jsonObj.getLong("dt");
                 String updatedAtText = "Updated at: " + new SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.ENGLISH).format(new Date(updatedAt * 1000));
-//                String temp = main.getString("temp") + "°C";
-//                String tempMin = "Min Temp: " + main.getString("temp_min") + "°C";
-//                String tempMax = "Max Temp: " + main.getString("temp_max") + "°C";
-//                String pressure = main.getString("pressure");
-//                String humidity = main.getString("humidity");
-
-//                Long sunrise = sys.getLong("sunrise");
-//                Long sunset = sys.getLong("sunset");
-//                String windSpeed = wind.getString("speed");
                 weatherInfo = weather.getString("description");
 
                 String address = jsonObj.getString("name") + ", " + sys.getString("country");

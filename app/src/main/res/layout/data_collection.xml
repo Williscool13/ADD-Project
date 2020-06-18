@@ -159,7 +159,7 @@
                         android:textSize="24dp"
                         android:textStyle="bold"
                         android:layout_centerHorizontal="true"
-                        android:text="Latitude"/>
+                        android:text="Longitude"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
